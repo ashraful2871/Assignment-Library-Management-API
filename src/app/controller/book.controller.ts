@@ -82,33 +82,46 @@ booksRouts.get("/:bookId", async (req: Request, res: Response) => {
 });
 
 // update books
-booksRouts.patch("/:bookId", async (req: Request, res: Response) => {
-  try {
-    const { bookId } = req.params;
-    const updatedBody = req.body;
-    const book = await Book.findByIdAndUpdate(bookId, updatedBody, {
-      new: true,
-      runValidators: true,
-    });
-    console.log(book);
-    if (!book) {
-      const error: any = new Error("Book not found");
-      error.status = 404;
-      throw error;
+booksRouts.patch(
+  "/:bookId",
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { bookId } = req.params;
+      const updatedBody = req.body;
+      const book = await Book.findByIdAndUpdate(bookId, updatedBody, {
+        new: true,
+        runValidators: true,
+      });
+      console.log(book);
+      if (!book) {
+        const error: any = new Error("Book not found");
+        error.status = 404;
+        throw error;
+      }
+      res.status(200).json({
+        success: true,
+        message: "Books updated successfully",
+        data: book,
+      });
+    } catch (error: any) {
+      let status = error.status || 500;
+      let errorName = error.name || "Error";
+      let errorDetails = error.errors || { message: error.message };
+      if (errorName !== "ValidationError") {
+        errorDetails = { message: error.message };
+      }
+
+      res.status(status).json({
+        message: error.message || "Internal server error",
+        success: false,
+        error: {
+          name: errorName,
+          errors: errorDetails,
+        },
+      });
     }
-    res.status(200).json({
-      success: true,
-      message: "Books updated successfully",
-      data: book,
-    });
-  } catch (error: any) {
-    res.status(error.status || 500).json({
-      success: false,
-      message: error.message || "internal server error",
-      error: error.errors || error.message,
-    });
   }
-});
+);
 // delete books
 booksRouts.delete("/:bookId", async (req: Request, res: Response) => {
   try {

@@ -17,7 +17,7 @@ export interface IBook extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
-// Interface for static methods on the Book model
-export interface IBookModel extends Model<IBook> {
-  availabilityUpdate(bookId: string, quantity: number): Promise<IBook>;
-}
+// // Interface for static methods on the Book model
+// export interface IBookModel extends Model<IBook> {
+//   availabilityUpdate(bookId: string, quantity: number): Promise<IBook>;
+// }
