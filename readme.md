@@ -11,23 +11,30 @@ A RESTful API for managing a library system, built with Express, TypeScript, and
 ## Installation
 
 1. Clone the repository:
-   ```bash
+
+```bash
    git clone https://github.com/ashraful2871/Assignment-Library-Management-API.git
+```
+
+2. go this directory:
+
+```bash
    cd library-management-api
-   ```
-2. Install dependencies:
+```
+
+3. Install dependencies:
 
 ```bash
    npm install
 ```
 
-3. Or for development with hot-reloading:
+4.  for development with hot-reloading:
 
 ```bash
 npm run dev
 ```
 
-Build and run the project:
+Or Build and run the project:
 
 ```bash
 npm run build
