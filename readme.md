@@ -17,19 +17,21 @@ A RESTful API for managing a library system, built with Express, TypeScript, and
    ```
 2. Install dependencies:
 
-   ```bash
+```bash
    npm install
-   ```
+```
 
-3. Build and run the project:
-   ```bash
-   npm run build
-   npm start
-   ```
-   Or for development with hot-reloading:
-   ```bash
-   npm run dev
-   ```
+3. Or for development with hot-reloading:
+
+```bash
+npm run dev
+```
+
+Build and run the project:
+
+```bash
+npm run build
+```
 
 ## API Endpoints
 
