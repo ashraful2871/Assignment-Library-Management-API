@@ -50,7 +50,7 @@ borrowRouts.get("/", async (req: Request, res: Response) => {
         },
       },
     ]);
-    res.status(201).json({
+    res.status(200).json({
       Success: true,
       message: "Borrowed books summary retrieved successfully",
       data: summary,
