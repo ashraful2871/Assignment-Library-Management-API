@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IBorrow } from "../interface/borrow.interface";
 import { Book } from "./book.model";
+import { IBookModel } from "../interface/book.interface";
 
 const borrowSchema = new Schema<IBorrow>(
   {
@@ -32,7 +33,8 @@ borrowSchema.pre("save", async function (next) {
 });
 
 borrowSchema.post("save", async function () {
-  await Book.availabilityUpdate(this.book.toString(), this.quantity);
+  const BookModel = Book as unknown as IBookModel;
+  await BookModel.availabilityUpdate(this.book.toString(), this.quantity);
 });
 
 export const Borrow = mongoose.model<IBorrow>("Borrow", borrowSchema);
