@@ -11,7 +11,7 @@ export interface IBook extends Document {
     | "BIOGRAPHY"
     | "FANTASY";
   isbn: string;
-  description: string;
+  description?: string;
   copies: number;
   available: boolean;
   createdAt: Date;
