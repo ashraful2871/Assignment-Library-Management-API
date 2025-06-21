@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IBook } from "../interface/book.interface";
 
-const BookSchema = new Schema<IBook>(
+const bookSchema = new Schema<IBook>(
   {
     title: {
       type: String,
@@ -54,13 +54,13 @@ const BookSchema = new Schema<IBook>(
   },
   { versionKey: false, timestamps: true }
 );
-BookSchema.pre("save", function (next) {
+bookSchema.pre("save", function (next) {
   this.available = this.copies > 0;
   this.updatedAt = new Date();
   next();
 });
 
-BookSchema.statics.availabilityUpdate = async function (
+bookSchema.statics.availabilityUpdate = async function (
   bookId: string,
   quantity: number
 ) {
@@ -70,4 +70,4 @@ BookSchema.statics.availabilityUpdate = async function (
   book.available = book.copies > 0;
   await book.save();
 };
-export const Book = mongoose.model<IBook>("Book", BookSchema);
+export const Book = mongoose.model<IBook>("Book", bookSchema);

@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Model } from "mongoose";
 
 export interface IBook extends Document {
   title: string;
@@ -16,4 +16,8 @@ export interface IBook extends Document {
   available: boolean;
   createdAt: Date;
   updatedAt: Date;
+}
+// Interface for static methods on the Book model
+export interface IBookModel extends Model<IBook> {
+  availabilityUpdate(bookId: string, quantity: number): Promise<IBook>;
 }
