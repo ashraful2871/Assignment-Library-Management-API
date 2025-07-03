@@ -92,7 +92,7 @@ booksRouts.patch(
         new: true,
         runValidators: true,
       });
-      console.log(book);
+
       if (!book) {
         const error: any = new Error("Book not found");
         error.status = 404;
