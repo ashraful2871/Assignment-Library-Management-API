@@ -24,23 +24,17 @@ booksRouts.post("/", async (req: Request, res: Response) => {
 // get all books
 booksRouts.get("/", async (req: Request, res: Response) => {
   try {
-    const {
-      filter,
-      sortBy = "createdAt",
-      sort = "desc",
-      limit = 10,
-    } = req.query;
+    const { filter, sortBy = "createdAt", sort = "desc" } = req.query;
     const query: any = {};
 
     if (filter) {
       query.genre = filter;
     }
 
-    const books = await Book.find(query)
-      .sort({
-        [sortBy as string]: sort === "asc" ? 1 : -1,
-      })
-      .limit(Number(limit));
+    const books = await Book.find(query).sort({
+      [sortBy as string]: sort === "asc" ? 1 : -1,
+    });
+
     res.status(200).json({
       success: true,
       message: "Books retrieved successfully",
@@ -88,6 +82,9 @@ booksRouts.patch(
     try {
       const { bookId } = req.params;
       const updatedBody = req.body;
+      if (typeof updatedBody.copies === "number") {
+        updatedBody.available = updatedBody.copies > 0;
+      }
       const book = await Book.findByIdAndUpdate(bookId, updatedBody, {
         new: true,
         runValidators: true,

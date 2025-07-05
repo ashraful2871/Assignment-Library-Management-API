@@ -37,16 +37,14 @@ exports.booksRouts.post("/", (req, res) => __awaiter(void 0, void 0, void 0, fun
 // get all books
 exports.booksRouts.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { filter, sortBy = "createdAt", sort = "desc", limit = 10, } = req.query;
+        const { filter, sortBy = "createdAt", sort = "desc" } = req.query;
         const query = {};
         if (filter) {
             query.genre = filter;
         }
-        const books = yield book_model_1.Book.find(query)
-            .sort({
+        const books = yield book_model_1.Book.find(query).sort({
             [sortBy]: sort === "asc" ? 1 : -1,
-        })
-            .limit(Number(limit));
+        });
         res.status(200).json({
             success: true,
             message: "Books retrieved successfully",
@@ -90,6 +88,9 @@ exports.booksRouts.patch("/:bookId", (req, res) => __awaiter(void 0, void 0, voi
     try {
         const { bookId } = req.params;
         const updatedBody = req.body;
+        if (typeof updatedBody.copies === "number") {
+            updatedBody.available = updatedBody.copies > 0;
+        }
         const book = yield book_model_1.Book.findByIdAndUpdate(bookId, updatedBody, {
             new: true,
             runValidators: true,
